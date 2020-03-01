@@ -28,8 +28,23 @@ display: flexbox;
 text-align: center;
 font-family: 'Consolas';
 color: greenyellow;
+margin-bottom: 15px;
 }
-.bit{
+ .bits8{
+width: 420px;
+border-radius: 15px;
+padding:15px;
+margin-left: auto;
+margin-right: auto;
+height:auto;
+background-color: rgb(58, 58, 58);
+display: flexbox;
+text-align: center;
+font-family: 'Consolas';
+color: greenyellow; 
+margin-bottom: 15px;
+}
+.bit,.bit8{
 justify-content: space-between;
 width:32px;
 background-color: #777;
@@ -43,13 +58,13 @@ stroke: none;
 text-align: center;
 outline: none;
 }
-.chk{
+.chk,.chk8 {
     float: left;
     justify-content: space-between; 
-    width: 35px;
-    height: 35px;
-    margin:7px;
-    padding: 1px;
+    width: 36px;
+    height: 36px;
+    margin:6px;
+    padding: 2px;
     border-radius: 30px;    
 }
 #blue{
@@ -59,10 +74,14 @@ outline: none;
 #red{
     background-color: rgb(107, 7, 7);
 }
-
+p{
+    margin: 3px;
+    padding: 3px;
+}
 </style>
 <body>
     <section>
+        <p>4 Bits</p>
         <input type="number" name="bit1" id="bit1" min="0" max="1" maxlength="1" value="0" class="bit" onchange="mudar(0)">
         <input type="number" name="bit2" id="bit2" min="0" max="1" maxlength="1" value="0" class="bit" onchange="mudar(1)">
         <input type="number" name="bit3" id="bit3" min="0" max="1" maxlength="1" value="0" class="bit" onchange="mudar(2)">
@@ -86,6 +105,40 @@ outline: none;
         </table>
       
     </section>
+    <section class="bits8">
+        <p>8 Bits</p>
+        <input type="number" name="bit1" id="bit1" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(0)">
+        <input type="number" name="bit2" id="bit2" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(1)">
+        <input type="number" name="bit3" id="bit3" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(2)">
+        <input type="number" name="bit4" id="bit4" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(3)">
+        
+        <input type="number" name="bit1" id="bit1" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(4)">
+        <input type="number" name="bit2" id="bit2" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(5)">
+        <input type="number" name="bit3" id="bit3" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(6)">
+        <input type="number" name="bit4" id="bit4" min="0" max="1" maxlength="1" value="0" class="bit8" onchange="mudar8(7)">
+        
+        <div class="chk8" onclick="mudar8(0)" id="red"></div>
+        <div class="chk8" onclick="mudar8(1)" id="red"></div>
+        <div class="chk8" onclick="mudar8(2)" id="red"></div>
+        <div class="chk8" onclick="mudar8(3)" id="red"></div>
+        <div class="chk8" onclick="mudar8(4)" id="red"></div>
+        <div class="chk8" onclick="mudar8(5)" id="red"></div>
+        <div class="chk8" onclick="mudar8(6)" id="red"></div>
+        <div class="chk8" onclick="mudar8(7)" id="red"></div>
+        <table>
+            <tr>
+                <th>bin</th>
+                <th>dec</th>
+                <th>hex</th>
+            </tr>
+            <tr>
+                <td id="res8"></td>            
+                <td id="dec8"></td>            
+                <td id="hex8"></td>
+            </tr>
+        </table>
+      
+    </section>
 </body>
 <script>
     
@@ -94,7 +147,13 @@ var chk = document.querySelectorAll(".chk");
 var res = document.querySelector("#res");
 var dec = document.querySelector("#dec");
 var hex = document.querySelector("#hex");
-window.onload = calcular();
+
+var bit8 = document.querySelectorAll(".bit8");
+var chk8 = document.querySelectorAll(".chk8");
+var res8 = document.querySelector("#res8");
+var dec8 = document.querySelector("#dec8");
+var hex8 = document.querySelector("#hex8");
+window.onload = ()=>calcular(),calcular8();
 
 function mudar(index){
 if (chk[index].id == "red") {
@@ -115,6 +174,26 @@ function calcular(){
     res.innerHTML = `${binval}`;
     dec.innerHTML = parseInt(`${binval}`,2);
     hex.innerHTML = parseInt(`${binval}`,2).toString(16).toUpperCase();
+}
+function mudar8(index){
+if (chk8[index].id == "red") {
+    chk8[index].id = "blue";
+    bit8[index].value="1";
+}else{
+    chk8[index].id = "red";
+    bit8[index].value="0"
+}
+calcular8();
+}
+function calcular8(){
+    let binval8 = "";
+    bit8.forEach((item,index)=>{
+      binval8 +=bit8[index].value;  
+    })
+    
+    res8.innerHTML = `${binval8}`;
+    dec8.innerHTML = parseInt(`${binval8}`,2);
+    hex8.innerHTML = parseInt(`${binval8}`,2).toString(16).toUpperCase();
 }
 </script>
 </html>
