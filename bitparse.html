@@ -7,6 +7,9 @@
     <title>Bit Parse</title>
 </head>
 <style>
+html{
+  background-color: rgb(19, 19, 19);  
+}
 input{
         font-family: 'Consolas';
     }
@@ -29,6 +32,25 @@ text-align: center;
 font-family: 'Consolas';
 color: greenyellow;
 margin-bottom: 15px;
+}
+.s-time{
+border-radius: 15px;
+padding:15px;
+margin-left: auto;
+margin-right: auto;
+width: 510px;
+height:auto;
+background-color: rgb(58, 58, 58);
+display: flexbox;
+text-align: center;
+font-family: 'Consolas';
+
+color: greenyellow;
+margin-bottom: 15px;
+}
+.s-time > .time{
+    font-size: 32px;
+    margin: 0px;
 }
  .bits8{
 width: 420px;
@@ -77,6 +99,19 @@ outline: none;
 p{
     margin: 3px;
     padding: 3px;
+}
+
+.timeled{  
+    width: 10px;
+    height: 10px;    
+    font-size: 10px;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.clock > td{
+    margin: 0px;
+    text-align: center;
 }
 </style>
 <body>
@@ -139,6 +174,10 @@ p{
         </table>
       
     </section>
+    <section class="s-time">
+        <p>Time in Binary</p>
+        <div class="time"></div>
+    </section>
 </body>
 <script>
     
@@ -153,8 +192,50 @@ var chk8 = document.querySelectorAll(".chk8");
 var res8 = document.querySelector("#res8");
 var dec8 = document.querySelector("#dec8");
 var hex8 = document.querySelector("#hex8");
-window.onload = ()=>calcular(),calcular8();
+var tm = document.querySelector(".time");
 
+window.onload = ()=>calcular(),calcular8();
+window.requestAnimationFrame(time);
+
+function time(){
+    var dt =new  Date();
+    tm.innerHTML = drawTime(dt);
+    window.requestAnimationFrame(time);
+}
+function drawTime(dt){
+    return `<table class="clock">
+            <tr>
+                <td class="time-hour">${("00"+dt.getHours()).slice(-2)}</td>
+                <td>:</td>
+                <td class="time-minutes">${("00"+dt.getMinutes()).slice(-2)}</td>
+                <td>:</td>
+                <td class="time-seconds">${("00"+dt.getSeconds()).slice(-2)}</td>
+                <td>.</td>
+                <td class="time-mili">${("000"+dt.getMilliseconds()).slice(-3)}</td>
+            </tr>
+            <tr>
+                <td class="bin-hour">${binled(dt.getHours().toString(2))}</td>
+                <td></td>
+                <td class="bin-minutes">${binled(dt.getMinutes().toString(2))}</td>
+                <td></td>
+                <td class="bin-seconds">${binled(dt.getSeconds().toString(2))}</td>
+                <td></td>
+                <td class="bin-mili">${binled(dt.getMilliseconds().toString(2))}</td>
+            </tr>
+        </table>`;
+}
+function binled(binum){
+let html ="";
+binum = ("00000000"+binum).slice(-8)
+for (let i = 0; i < binum.length; i++) {
+    if(binum[i]=="0"){
+    html += `<div class="timeled" id="red">${binum[i]}</div>`;
+    }else{
+    html += `<div class="timeled" id="blue">${binum[i]}</div>`;
+    }
+}
+return html;
+}
 function mudar(index){
 if (chk[index].id == "red") {
     chk[index].id = "blue";
